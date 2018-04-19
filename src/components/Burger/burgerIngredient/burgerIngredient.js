@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import classes from './BurgerIngredients.css';
+import classes from './BurgerIngredient.css';
 
 class BurgerIngredient extends Component {
 
@@ -9,7 +9,7 @@ class BurgerIngredient extends Component {
 
     switch (this.props.type) {
       case ('bread-bottom'):
-        ingredient = <div className={classes.BreadBbottom}></div>;
+        ingredient = <div className={classes.BreadBottom}></div>;
         break;
       case ('bread-top'):
         ingredient = (
