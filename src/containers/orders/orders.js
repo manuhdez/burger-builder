@@ -16,7 +16,7 @@ class Orders extends Component {
       .then( res => {
         const fetchedOrders = [];
         for (let key in res.data) {
-          fetchedOrders.push({
+          fetchedOrders.unshift({
             ...res.data[key],
             id: key
           });
