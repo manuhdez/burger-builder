@@ -15,7 +15,11 @@ state = {
         type: 'text',
         placeholder: 'Your name'
       },
-      value: ''
+      value: '',
+      validation: {
+        required: true
+      },
+      valid: false
     },
     street: {
       elementType: 'input',
@@ -23,7 +27,11 @@ state = {
         type: 'text',
         placeholder: 'Street'
       },
-      value: ''
+      value: '',
+      validation: {
+        required: true
+      },
+      valid: false
     },
     zipCode: {
       elementType: 'input',
@@ -31,7 +39,13 @@ state = {
         type: 'text',
         placeholder: 'ZIP Code'
       },
-      value: ''
+      value: '',
+      validation: {
+        required: true,
+        minLength: 5,
+        maxLength: 5
+      },
+      valid: false
     },
     country: {
       elementType: 'input',
@@ -39,7 +53,11 @@ state = {
         type: 'text',
         placeholder: 'Country'
       },
-      value: ''
+      value: '',
+      validation: {
+        required: true
+      },
+      valid: false
     },
     email: {
       elementType: 'input',
@@ -47,7 +65,11 @@ state = {
         type: 'email',
         placeholder: 'Your Email'
       },
-      value: ''
+      value: '',
+      validation: {
+        required: true
+      },
+      valid: false
     },
     deliveryMethod: {
       elementType: 'select',
@@ -86,11 +108,31 @@ orderHandler = (event) => {
     .catch( error => this.setState({loading: false}));
 }
 
+checkValidation(value, rules) {
+  let isValid = true;
+
+  if (rules.required) {
+    isValid = value.trim() !== '' && isValid;
+  }
+
+  if (rules.minLength) {
+    isValid = value.length >= rules.minLength && isValid;
+  }
+
+  if (rules.maxLength) {
+    isValid = value.length <= rules.maxLength && isValid;
+  }
+
+  return isValid;
+}
+
 inputChangedHandler = (event, inputIdentifier) => {
   const newOrderForm = {...this.state.orderForm};
   const newInputValue = {...newOrderForm[inputIdentifier]};
 
   newInputValue.value = event.target.value;
+  newInputValue.valid = this.checkValidation(newInputValue.value, newInputValue.validation);
+  console.log(newInputValue.valid);
   newOrderForm[inputIdentifier] = newInputValue;
 
   this.setState({
