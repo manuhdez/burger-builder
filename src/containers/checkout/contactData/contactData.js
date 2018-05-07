@@ -57,7 +57,7 @@ state = {
           {value: 'cheapest', displayValue: 'Cheapest'}
         ]
       },
-      value: ''
+      value: 'fastest'
     }
     },
     loading: false
@@ -67,10 +67,15 @@ orderHandler = (event) => {
   event.preventDefault();
 
   this.setState({loading: true});
+  const formData = {};
+  for (let formEl in this.state.orderForm) {
+    formData[formEl] = this.state.orderForm[formEl].value;
+  }
 
   const order = {
     ingredients: this.props.ingredients,
-    price: this.props.price
+    price: this.props.price,
+    orderData: formData
   };
 
   axios.post('/orders.json', order)
@@ -104,7 +109,7 @@ render() {
   }
 
   let form = (
-    <form action="">
+    <form onSubmit={this.orderHandler}>
       {
         formElements.map( formElement => {
           return (
@@ -118,7 +123,7 @@ render() {
           );
         })
       }
-      <Button btnType="Success" clicked={this.orderHandler}>ORDER</Button>
+      <Button btnType="Success">ORDER</Button>
     </form>
   );
 
