@@ -81,6 +81,18 @@ orderHandler = (event) => {
     .catch( error => this.setState({loading: false}));
 }
 
+inputChangedHandler = (event, inputIdentifier) => {
+  const newOrderForm = {...this.state.orderForm};
+  const newInputValue = {...newOrderForm[inputIdentifier]};
+
+  newInputValue.value = event.target.value;
+  newOrderForm[inputIdentifier] = newInputValue;
+
+  this.setState({
+    orderForm: newOrderForm
+  });
+}
+
 render() {
 
   let formElements = [];
@@ -101,6 +113,7 @@ render() {
               elementType={formElement.config.elementType}
               elementConfig={formElement.config.elementConfig}
               value={formElement.config.value}
+              changed={(event) => this.inputChangedHandler(event, formElement.id)}
             />
           );
         })
