@@ -85,12 +85,12 @@ state = {
         ]
       },
       value: 'fastest',
-      validation: {
-        required: true
-      }
+      validation: true,
+      valid: true
     }
     },
-    loading: false
+    loading: false,
+    formIsValid: false
   }
 
 orderHandler = (event) => {
@@ -143,8 +143,14 @@ inputChangedHandler = (event, inputIdentifier) => {
   newInputValue.touched = true;
   newOrderForm[inputIdentifier] = newInputValue;
 
+  let formIsValid = true;
+  for (let inputField in newOrderForm) {
+    formIsValid = newOrderForm[inputField].valid && formIsValid;
+  }
+
   this.setState({
-    orderForm: newOrderForm
+    orderForm: newOrderForm,
+    formIsValid: formIsValid
   });
 }
 
@@ -176,7 +182,7 @@ render() {
           );
         })
       }
-      <Button btnType="Success">ORDER</Button>
+      <Button btnType="Success" disabled={!this.state.formIsValid}>ORDER</Button>
     </form>
   );
 
