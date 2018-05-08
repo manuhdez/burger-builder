@@ -85,7 +85,7 @@ state = {
         ]
       },
       value: 'fastest',
-      validation: true,
+      validation: {},
       valid: true
     }
     },
