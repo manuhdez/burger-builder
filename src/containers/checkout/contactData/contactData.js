@@ -19,7 +19,8 @@ state = {
       validation: {
         required: true
       },
-      valid: false
+      valid: false,
+      touched: false
     },
     street: {
       elementType: 'input',
@@ -31,7 +32,8 @@ state = {
       validation: {
         required: true
       },
-      valid: false
+      valid: false,
+      touched: false
     },
     zipCode: {
       elementType: 'input',
@@ -45,7 +47,8 @@ state = {
         minLength: 5,
         maxLength: 5
       },
-      valid: false
+      valid: false,
+      touched: false
     },
     country: {
       elementType: 'input',
@@ -57,7 +60,8 @@ state = {
       validation: {
         required: true
       },
-      valid: false
+      valid: false,
+      touched: false
     },
     email: {
       elementType: 'input',
@@ -69,7 +73,8 @@ state = {
       validation: {
         required: true
       },
-      valid: false
+      valid: false,
+      touched: false
     },
     deliveryMethod: {
       elementType: 'select',
@@ -79,7 +84,10 @@ state = {
           {value: 'cheapest', displayValue: 'Cheapest'}
         ]
       },
-      value: 'fastest'
+      value: 'fastest',
+      validation: {
+        required: true
+      }
     }
     },
     loading: false
@@ -132,7 +140,7 @@ inputChangedHandler = (event, inputIdentifier) => {
 
   newInputValue.value = event.target.value;
   newInputValue.valid = this.checkValidation(newInputValue.value, newInputValue.validation);
-  console.log(newInputValue.valid);
+  newInputValue.touched = true;
   newOrderForm[inputIdentifier] = newInputValue;
 
   this.setState({
@@ -160,6 +168,9 @@ render() {
               elementType={formElement.config.elementType}
               elementConfig={formElement.config.elementConfig}
               value={formElement.config.value}
+              invalid={!formElement.config.valid}
+              shouldValidate={formElement.config.validation}
+              touched={formElement.config.touched}
               changed={(event) => this.inputChangedHandler(event, formElement.id)}
             />
           );
