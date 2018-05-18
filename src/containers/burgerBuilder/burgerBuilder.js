@@ -14,43 +14,27 @@ import * as actionTypes from '../../store/actions';
 class BurgerBuilder extends Component {
 
   state = {
-<<<<<<< HEAD
     // ingredients: null,
     // totalPrice: 4,
     // purchasable: false,
-||||||| merged common ancestors
-    ingredients: null,
-    totalPrice: 4,
-    purchasable: false,
-=======
     // ingredients: null,
     // totalPrice: 4,
     purchasable: false,
->>>>>>> 20ceb3a6e48a8efcbba71bd6a962f007833d7dcf
     purchasing: false,
     loading: false,
     error: false
   }
 
-<<<<<<< HEAD
   // componentDidMount = () => {
   //   axios.get('https://react-burger-5b183.firebaseio.com/ingredients.json')
   //     .then(response => this.setState({ingredients: response.data}))
   //     .catch(error => this.setState({error: true}));
   // }
-||||||| merged common ancestors
-  componentDidMount = () => {
-    axios.get('https://react-burger-5b183.firebaseio.com/ingredients.json')
-      .then(response => this.setState({ingredients: response.data}))
-      .catch(error => this.setState({error: true}));
-  }
-=======
   componentDidMount = () => {
     // axios.get('https://react-burger-5b183.firebaseio.com/ingredients.json')
     //   .then(response => this.setState({ingredients: response.data}))
     //   .catch(error => this.setState({error: true}));
   }
->>>>>>> 20ceb3a6e48a8efcbba71bd6a962f007833d7dcf
 
   updatePurchaseState(ingredients) {
     const sum = Object.keys(ingredients)
@@ -100,27 +84,17 @@ class BurgerBuilder extends Component {
   };
 
   purchaseContinueHandler = () => {
-<<<<<<< HEAD
   //   const queryParams = [];
   //   for (let ingredient in this.props.ings) {
   //     queryParams.push(encodeURIComponent(ingredient) + '=' + encodeURIComponent(this.props.ings[ingredient]));
   //   }
   //   queryParams.push('price=' + this.props.tPrice);
-||||||| merged common ancestors
-    const queryParams = [];
-
-    for (let ingredient in this.state.ingredients) {
-      queryParams.push(encodeURIComponent(ingredient) + '=' + encodeURIComponent(this.state.ingredients[ingredient]));
-    }
-    queryParams.push('price=' + this.state.totalPrice);
-=======
     const queryParams = [];
 
     for (let ingredient in this.props.ings) {
       queryParams.push(encodeURIComponent(ingredient) + '=' + encodeURIComponent(this.props.ings[ingredient]));
     }
     queryParams.push('price=' + this.props.tPrice);
->>>>>>> 20ceb3a6e48a8efcbba71bd6a962f007833d7dcf
 
     this.props.history.push('/checkout');
   };
