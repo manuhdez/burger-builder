@@ -11,18 +11,11 @@ import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 import axios from '../../axios-orders';
 import * as actionTypes from '../../store/actions';
 
-// const INGREDIENT_PRICES = {
-//   salad: 0.4,
-//   cheese: 0.3,
-//   bacon: 0.7,
-//   meat: 1.3
-// }
-
 class BurgerBuilder extends Component {
 
   state = {
     // ingredients: null,
-    totalPrice: 4,
+    // totalPrice: 4,
     purchasable: false,
     purchasing: false,
     loading: false,
@@ -88,7 +81,7 @@ class BurgerBuilder extends Component {
     for (let ingredient in this.props.ings) {
       queryParams.push(encodeURIComponent(ingredient) + '=' + encodeURIComponent(this.props.ings[ingredient]));
     }
-    queryParams.push('price=' + this.state.totalPrice);
+    queryParams.push('price=' + this.props.tPrice);
 
     this.props.history.push({
       pathname: '/checkout',
@@ -116,13 +109,13 @@ class BurgerBuilder extends Component {
           disabled={disabledInfo}
           purchasable={this.state.purchasable}
           ordered={this.purchaseHandler}
-          price={this.state.totalPrice} />
+          price={this.props.tPrice} />
         </Aux>
       );
 
       orderSummary = <OrderSummary
         ingredients={this.props.ings}
-        price={this.state.totalPrice}
+        price={this.props.tPrice}
         purchaseCanceled={this.purchaseCancelHandler}
         purchaseContinued={this.purchaseContinueHandler} />;
     }
@@ -144,7 +137,8 @@ class BurgerBuilder extends Component {
 
 const mapStateToProps = state => {
   return {
-    ings: state.ingredients
+    ings: state.ingredients,
+    tPrice: state.totalPrice
   }
 };
 
