@@ -9,7 +9,7 @@ import OrderSummary from '../../components/Burger/orderSummary/orderSummary';
 import Spinner from '../../components/UI/spinner/spinner';
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 import axios from '../../axios-orders';
-import { addIngredient, removeIngredient, fetchIngredients } from '../../store/actions/index';
+import { addIngredient, removeIngredient, fetchIngredients, purchaseInit } from '../../store/actions/index';
 
 class BurgerBuilder extends Component {
 
@@ -74,18 +74,13 @@ class BurgerBuilder extends Component {
   };
 
   purchaseContinueHandler = () => {
-  //   const queryParams = [];
-  //   for (let ingredient in this.props.ings) {
-  //     queryParams.push(encodeURIComponent(ingredient) + '=' + encodeURIComponent(this.props.ings[ingredient]));
-  //   }
-  //   queryParams.push('price=' + this.props.tPrice);
-    const queryParams = [];
+    // const queryParams = [];
 
-    for (let ingredient in this.props.ings) {
-      queryParams.push(encodeURIComponent(ingredient) + '=' + encodeURIComponent(this.props.ings[ingredient]));
-    }
-    queryParams.push('price=' + this.props.tPrice);
-
+    // for (let ingredient in this.props.ings) {
+    //   queryParams.push(encodeURIComponent(ingredient) + '=' + encodeURIComponent(this.props.ings[ingredient]));
+    // }
+    // queryParams.push('price=' + this.props.tPrice);
+    this.props.onInitPurchase();
     this.props.history.push('/checkout');
   };
 
@@ -144,6 +139,7 @@ const mapDispatchToProps = dispatch => {
     onIngredientAdded: (ingName) => dispatch(addIngredient(ingName)),
     onIngredientRemoved: (ingName) => dispatch(removeIngredient(ingName)),
     fetchIngredients: () => dispatch(fetchIngredients()),
+    onInitPurchase: () => dispatch(purchaseInit())
   }
 };
 

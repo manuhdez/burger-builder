@@ -6,24 +6,6 @@ import CheckoutSummary from '../../components/order/checkoutSummary/checkoutSumm
 import ContactData from '../checkout/contactData/contactData';
 
 class Checkout extends Component {
-  // state = {
-  //   ingredients: null,
-  //   price: 0
-  // }
-  // componentWillMount() {
-  //   const query = new URLSearchParams(this.props.location.search);
-  //   const ingredients = {};
-  //   let price = 0;
-
-  //   for (let param of query.entries()) {
-  //     if (param[0] === 'price') {
-  //       price = param[1];
-  //     } else {
-  //       ingredients[param[0]] = +param[1];
-  //     }
-  //   }
-  //   this.setState({ ingredients: ingredients, price: price });
-  // }
 
   checkoutCancelHandler = () => {
     this.props.history.goBack();
@@ -38,6 +20,7 @@ class Checkout extends Component {
     if (this.props.ings) {
       summary = (
         <div>
+          {this.props.purchased ? <Redirect to="/" /> : null}
           <CheckoutSummary
             ingredients={this.props.ings}
             checkoutCancel={this.checkoutCancelHandler}
@@ -55,7 +38,8 @@ class Checkout extends Component {
 
 const mapStateToProps = state => {
   return {
-    ings: state.burguer.ingredients
+    ings: state.burguer.ingredients,
+    purchased: state.order.purchased
   }
 }
 
