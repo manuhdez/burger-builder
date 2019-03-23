@@ -6,5 +6,5 @@ export {
     fetchIngredientsFail
 } from './burguerBuilder';
 export {
-
+    purchaseBurguer
 } from './order';

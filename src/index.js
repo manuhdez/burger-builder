@@ -8,12 +8,16 @@ import thunk from 'redux-thunk';
 import './index.css';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
+// Redux state reducers
 import burguerBuilderReducer from './store/reducers/burguerBuilder';
+import orderReducer from './store/reducers/order';
+
 
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const rootReducer = combineReducers({
-  burguer: burguerBuilderReducer
+  burguer: burguerBuilderReducer,
+  order: orderReducer
 });
 
 const store = createStore(

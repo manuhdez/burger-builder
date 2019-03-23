@@ -6,6 +6,9 @@ import Button from '../../../components/UI/button/button';
 import Spinner from '../../../components/UI/spinner/spinner';
 import Input from '../../../components/UI/input/input';
 import classes from './contactData.css';
+import withErrorHandler from '../../../hoc/withErrorHandler/withErrorHandler';
+// Redux actions
+import { purchaseBurguer } from '../../../store/actions';
 
 class ContactData extends Component {
 
@@ -90,7 +93,6 @@ class ContactData extends Component {
         validation: {},
         valid: true
       }},
-    loading: false,
     formIsValid: false
   }
 
@@ -109,7 +111,7 @@ class ContactData extends Component {
       orderData: formData
     };
 
-    
+    this.props.onBurguerPurchase(order);
   }
 
   checkValidation(value, rules) {
@@ -182,7 +184,7 @@ class ContactData extends Component {
       </form>
     );
 
-    if (this.state.loading) {
+    if (this.props.loading) {
       form = <Spinner />;
     }
 
@@ -197,9 +199,16 @@ class ContactData extends Component {
 
 const mapStateToProps = state => {
   return {
-    ings: state.ingredients,
-    tPrice: state.totalPrice
+    ings: state.burguer.ingredients,
+    tPrice: state.burguer.totalPrice,
+    loading: state.order.loading
   }
 }
 
-export default connect(mapStateToProps)(ContactData);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onBurguerPurchase: (orderData) => dispatch(purchaseBurguer(orderData)),
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(withErrorHandler(ContactData, axios));
