@@ -7,10 +7,13 @@ import { Provider } from 'react-redux';
 import './index.css';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
-import reducer from './store/reducers/reducer';
+import burguerBuilderReducer from './store/reducers/burguerBuilder';
 
 
-const store = createStore(reducer);
+const store = createStore(
+  burguerBuilderReducer,
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+);
 
 const app = (
   <Provider store={store} >
