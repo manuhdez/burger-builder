@@ -9,7 +9,7 @@ import OrderSummary from '../../components/Burger/orderSummary/orderSummary';
 import Spinner from '../../components/UI/spinner/spinner';
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 import axios from '../../axios-orders';
-import { addIngredient, removeIngredient } from '../../store/actions/index';
+import { addIngredient, removeIngredient, fetchIngredients } from '../../store/actions/index';
 
 class BurgerBuilder extends Component {
 
@@ -19,21 +19,11 @@ class BurgerBuilder extends Component {
     // purchasable: false,
     // ingredients: null,
     // totalPrice: 4,
-    purchasable: false,
     purchasing: false,
-    loading: false,
-    error: false
   }
 
-  // componentDidMount = () => {
-  //   axios.get('https://react-burger-5b183.firebaseio.com/ingredients.json')
-  //     .then(response => this.setState({ingredients: response.data}))
-  //     .catch(error => this.setState({error: true}));
-  // }
   componentDidMount = () => {
-    // axios.get('https://react-burger-5b183.firebaseio.com/ingredients.json')
-    //   .then(response => this.setState({ingredients: response.data}))
-    //   .catch(error => this.setState({error: true}));
+    this.props.fetchIngredients();
   }
 
   updatePurchaseState(ingredients) {
@@ -107,7 +97,7 @@ class BurgerBuilder extends Component {
 
 
     let orderSummary = null;
-    let burger = this.state.error ? <p style={{textAlign: 'center'}}>Ingredients can't be loaded</p> : <Spinner />;
+    let burger = this.props.error ? <p style={{textAlign: 'center'}}>Ingredients can't be loaded</p> : <Spinner />;
 
     if (this.props.ings){
       burger = (
@@ -130,10 +120,6 @@ class BurgerBuilder extends Component {
         purchaseContinued={this.purchaseContinueHandler} />;
     }
 
-    if (this.state.loading) {
-      orderSummary = <Spinner />;
-    }
-
     return (
       <Aux>
         <Modal show={this.state.purchasing} modalClosed={this.purchaseCancelHandler}>
@@ -148,6 +134,7 @@ class BurgerBuilder extends Component {
 const mapStateToProps = state => {
   return {
     ings: state.burguer.ingredients,
+    error: state.burguer.error,
     tPrice: state.burguer.totalPrice
   }
 };
@@ -155,7 +142,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     onIngredientAdded: (ingName) => dispatch(addIngredient(ingName)),
-    onIngredientRemoved: (ingName) => dispatch(removeIngredient(ingName))
+    onIngredientRemoved: (ingName) => dispatch(removeIngredient(ingName)),
+    fetchIngredients: () => dispatch(fetchIngredients()),
   }
 };
 

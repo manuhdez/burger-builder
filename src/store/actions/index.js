@@ -1,7 +1,10 @@
 export {
     addIngredient,
-    removeIngredient
+    removeIngredient,
+    fetchIngredients,
+    setIngredients,
+    fetchIngredientsFail
 } from './burguerBuilder';
 export {
-    
+
 } from './order';

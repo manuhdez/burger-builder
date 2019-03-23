@@ -18,7 +18,7 @@ const rootReducer = combineReducers({
 
 const store = createStore(
   rootReducer,
-  compose(applyMiddleware(thunk, composeEnhancer))
+  composeEnhancer(applyMiddleware(thunk))
 );
 
 const app = (
