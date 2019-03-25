@@ -14,9 +14,10 @@ const authSuccess = (idToken, userId) => {
     }
 };
 
-const authFail = () => {
+const authFail = (error) => {
     return {
-        type: AUTH_FAIL
+        type: AUTH_FAIL,
+        error
     }
 };
 
@@ -35,8 +36,7 @@ export const auth = (authData, signUpMode) => {
             const { idToken, localId } = response.data;
             dispatch(authSuccess(idToken, localId));
         } catch(err) {
-            console.log(err);
-            dispatch(authFail());
+            dispatch(authFail(err.response.data.error));
         }
     }
 };
