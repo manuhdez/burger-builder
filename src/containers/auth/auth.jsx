@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom';
 import Input from '../../components/UI/input/input';
 import Button from '../../components/UI/button/button';
 import Spinner from '../../components/UI/spinner/spinner';
@@ -108,6 +109,10 @@ class Auth extends Component {
     }
 
     render() {
+        if (this.props.isUserAuth) {
+            return <Redirect to="/" />;
+        }
+
         let formElementsArray = [];
         for (let key in this.state.authForm) {
             formElementsArray.push({
@@ -157,7 +162,8 @@ class Auth extends Component {
 const mapStateToProps = (state) => {
     return {
         loading: state.auth.loading,
-        error: state.auth.error
+        error: state.auth.error,
+        isUserAuth: state.auth.idToken ? true : false,
     };
 };
 
