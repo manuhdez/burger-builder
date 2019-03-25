@@ -6,9 +6,11 @@ const apiKey = process.env.REACT_APP_FIREBASE_API_KEY;
 const signUpUrl = `https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=${apiKey}`;
 const logInUrl = `https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword?key=${apiKey}`;
 
-const authSuccess = (data) => {
+const authSuccess = (idToken, userId) => {
     return {
-        type: AUTH_SUCCESS
+        type: AUTH_SUCCESS,
+        idToken,
+        userId
     }
 };
 
@@ -30,8 +32,8 @@ export const auth = (authData, signUpMode) => {
         try {
             const url = signUpMode ? signUpUrl : logInUrl;
             const response = await axios.post(url, authData);
-            console.log(response);
-            dispatch(authSuccess(response.data));
+            const { idToken, localId } = response.data;
+            dispatch(authSuccess(idToken, localId));
         } catch(err) {
             console.log(err);
             dispatch(authFail());

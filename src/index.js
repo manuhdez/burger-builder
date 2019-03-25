@@ -11,13 +11,15 @@ import registerServiceWorker from './registerServiceWorker';
 // Redux state reducers
 import burguerBuilderReducer from './store/reducers/burguerBuilder';
 import orderReducer from './store/reducers/order';
+import authReducer from './store/reducers/auth';
 
 
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const rootReducer = combineReducers({
   burguer: burguerBuilderReducer,
-  order: orderReducer
+  order: orderReducer,
+  auth: authReducer
 });
 
 const store = createStore(
