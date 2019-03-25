@@ -38,11 +38,11 @@ export const purchaseInit = () => {
     };
 };
 
-export const purchaseBurguer = (orderData) => {
+export const purchaseBurguer = (orderData, token) => {
     return async (dispatch) => {
         dispatch(purchaseBurguerStart());
         try {
-            const response = await axios.post('/orders.json', orderData);
+            const response = await axios.post('/orders.json?auth=' + token, orderData);
             dispatch(purchaseBurguerSuccess(response.data.name, orderData));
         } catch(err) {
             dispatch(purchaseBurguerFail(err));
@@ -71,11 +71,11 @@ const fetchOrdersStart = () => {
     };
 };
 
-export const fetchOrders = () => {
+export const fetchOrders = (token) => {
     return async (dispatch) => {
         dispatch(fetchOrdersStart());
         try {
-            const response = await axios.get('/orders.json');
+            const response = await axios.get('/orders.json?auth=' + token);
             const fetchedOrders = [];
             for (let key in response.data) {
                 fetchedOrders.unshift({
