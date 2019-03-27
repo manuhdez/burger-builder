@@ -1,14 +1,22 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component, Fragment, lazy } from 'react';
 import { Route, withRouter } from 'react-router-dom';
 
 import Layout from './hoc/layout/layout';
+import asyncComponent from './hoc/async/asyncComponent';
 import BurgerBuilder from './containers/burgerBuilder/burgerBuilder';
-import Checkout from './containers/checkout/checkout';
-import Orders from './containers/orders/orders';
 import Auth from './containers/auth/auth';
 import Logout from './containers/auth/logout/logout';
 import { connect } from 'react-redux';
 import { checkAuthState } from './store/actions';
+// utility
+
+// Async components
+const Checkout = lazy(() => import('./containers/checkout/checkout'));
+const Orders = lazy(() => import('./containers/orders/orders'));
+
+
+
+
 
 class App extends Component {
 
@@ -22,8 +30,8 @@ class App extends Component {
       appRoutes = (
         <Fragment>
           <Route path="/" exact component={BurgerBuilder}/>
-          <Route path="/checkout" component={Checkout} />
-          <Route path="/orders" component={Orders} />
+          <Route path="/checkout" render={(props) => asyncComponent(Checkout, props)} />
+          <Route path="/orders" render={(props) => asyncComponent(Orders, props)} />
           <Route path="/auth" component={Auth} />
           <Route path="/logout" component={Logout} />
         </Fragment>
