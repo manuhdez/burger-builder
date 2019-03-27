@@ -9,13 +9,17 @@ export const updateIngredientState = (oldState, prices, ingredient, operation) =
     const updatedIngredient = operation
         ? {[ingredient]: oldState.ingredients[ingredient] + 1}
         : {[ingredient]: oldState.ingredients[ingredient] - 1};
+    const updatedPrice = operation
+        ? oldState.totalPrice + prices[ingredient]
+        : oldState.totalPrice - prices[ingredient];
 
     const updatedIngredients = updateObject(oldState.ingredients, updatedIngredient);
-    const toUpdateState = {
-    ingredients: updatedIngredients,
-    totalPrice: oldState.totalPrice + prices[ingredient]
+    const updatedState = {
+        ingredients: updatedIngredients,
+        totalPrice: updatedPrice,
+        building: true
     }
-    return updateObject(oldState, toUpdateState);
+    return updateObject(oldState, updatedState);
 }
 
 export const setIngredients = (state, action) => {
@@ -28,7 +32,8 @@ export const setIngredients = (state, action) => {
           meat: ingredients.meat
         },
         totalPrice: 4,
-        error: false
+        error: false,
+        building: false
       }
       return updateObject(state, updatedValues);
 }

@@ -9,7 +9,7 @@ import OrderSummary from '../../components/Burger/orderSummary/orderSummary';
 import Spinner from '../../components/UI/spinner/spinner';
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 import axios from '../../axios-orders';
-import { addIngredient, removeIngredient, fetchIngredients, purchaseInit } from '../../store/actions/index';
+import { addIngredient, removeIngredient, fetchIngredients, purchaseInit, setRedirectPath } from '../../store/actions/index';
 
 class BurgerBuilder extends Component {
 
@@ -23,7 +23,11 @@ class BurgerBuilder extends Component {
   }
 
   componentDidMount = () => {
-    this.props.fetchIngredients();
+    if (this.props.ings) {
+      console.log('ya hay ingredientes no hay que descargarlos');
+    } else {
+      this.props.fetchIngredients();
+    }
   }
 
   updatePurchaseState(ingredients) {
@@ -69,6 +73,7 @@ class BurgerBuilder extends Component {
     if (this.props.isUserAuth) {
       this.setState({ purchasing: true });
     } else {
+      this.props.onSetAuthRedirectPath('/checkout');
       this.props.history.push('/auth');
     }
   }
@@ -145,7 +150,8 @@ const mapDispatchToProps = dispatch => {
     onIngredientAdded: (ingName) => dispatch(addIngredient(ingName)),
     onIngredientRemoved: (ingName) => dispatch(removeIngredient(ingName)),
     fetchIngredients: () => dispatch(fetchIngredients()),
-    onInitPurchase: () => dispatch(purchaseInit())
+    onInitPurchase: () => dispatch(purchaseInit()),
+    onSetAuthRedirectPath: (path) => dispatch(setRedirectPath(path)),
   }
 };
 

@@ -6,7 +6,7 @@ import Spinner from '../../components/UI/spinner/spinner';
 import classes from './auth.css';
 // Redux imports
 import { connect } from 'react-redux';
-import { auth } from '../../store/actions';
+import { auth, setRedirectPath } from '../../store/actions';
 
 class Auth extends Component {
     state = {
@@ -42,6 +42,12 @@ class Auth extends Component {
         },
         isFormValid: false,
         signupMode: true
+    }
+
+    componentDidMount() {
+        if (!this.props.building && this.props.authRedirectPath !== '/') {
+            this.props.onSetAuthRedirectPath('/');
+        }
     }
 
     checkValidation(value, rules) {
@@ -110,7 +116,7 @@ class Auth extends Component {
 
     render() {
         if (this.props.isUserAuth) {
-            return <Redirect to="/" />;
+            return <Redirect to={this.props.authRedirectPath} />;
         }
 
         let formElementsArray = [];
@@ -164,12 +170,15 @@ const mapStateToProps = (state) => {
         loading: state.auth.loading,
         error: state.auth.error,
         isUserAuth: state.auth.idToken ? true : false,
+        building: state.burguer.building,
+        authRedirectPath: state.auth.authRedirectPath
     };
 };
 
 const mapDispatchToProps = (dispatch) => {
     return {
         onAuth: (userData, signupMode) => dispatch(auth(userData, signupMode)),
+        onSetAuthRedirectPath: (path) => dispatch(setRedirectPath(path)),
     };
 };
 

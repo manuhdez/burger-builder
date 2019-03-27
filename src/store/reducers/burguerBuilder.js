@@ -11,7 +11,8 @@ const initialState = {
     meat: 0
   },
   error: false,
-  totalPrice: 4
+  totalPrice: 4,
+  building: false
 };
 
 const INGREDIENT_PRICES = {
