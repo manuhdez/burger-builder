@@ -1,9 +1,4 @@
-export const updateObject = (oldObject, updatedProperties) => {
-    return {
-        ...oldObject,
-        ...updatedProperties
-    }
-}
+import { updateObject } from '../shared/utility';
 
 export const updateIngredientState = (oldState, prices, ingredient, operation) => {
     const updatedIngredient = operation

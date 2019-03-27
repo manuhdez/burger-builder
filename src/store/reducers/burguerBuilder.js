@@ -1,5 +1,6 @@
 import actionTypes from '../actions/actionTypes';
-import { updateObject, updateIngredientState, setIngredients } from '../utility';
+import { updateObject } from '../../shared/utility';
+import { updateIngredientState, setIngredients } from '../storeUtility';
 
 const { ADD_INGREDIENT, REMOVE_INGREDIENT, SET_INGREDIENTS, FETCH_INGREDIENTS_FAIL } = actionTypes;
 

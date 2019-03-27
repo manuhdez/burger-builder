@@ -3,11 +3,6 @@ import Aux from '../../../hoc/aux/aux';
 import Button from '../../UI/button/button';
 
 class orderSummary extends Component {
-  //This could be a functional component, no need for a class component
-  // componentWillUpdate() {
-  //   console.log('[ORDER SUMMARY] Will update');
-  // }
-
   render () {
     const ingredientSummary = Object.keys(this.props.ingredients)
     .map( (igKey, index) => <li key={igKey + index}><span style={{textTransform: 'capitalize'}}>{igKey}:</span> {this.props.ingredients[igKey]}</li> );

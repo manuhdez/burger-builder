@@ -9,10 +9,6 @@ class Modal extends Component {
     return nextProps.show !== this.props.show || nextProps.children !== this.props.children;
   }
 
-  // componentWillUpdate() {
-  //   console.log('[Modal] Component will update');
-  // }
-
   render() {
     const styling = {
       transform: this.props.show ? 'translateY(0)' : 'translateY(-100vh)',

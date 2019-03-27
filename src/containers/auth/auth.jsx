@@ -7,6 +7,8 @@ import classes from './auth.css';
 // Redux imports
 import { connect } from 'react-redux';
 import { auth, setRedirectPath } from '../../store/actions';
+// utilities
+import { updateObject, checkValidation } from '../../shared/utility';
 
 class Auth extends Component {
     state = {
@@ -50,40 +52,15 @@ class Auth extends Component {
         }
     }
 
-    checkValidation(value, rules) {
-        let isValid = true;
-    
-        if (rules.required) {
-          isValid = value.trim() !== '' && isValid;
-        }
-    
-        if (rules.minLength) {
-          isValid = value.length >= rules.minLength && isValid;
-        }
-    
-        if (rules.maxLength) {
-          isValid = value.length <= rules.maxLength && isValid;
-        }
-
-        if (rules.isEmail) {
-            // eslint-disable-next-line no-useless-escape
-            const emailRegex = /(.+)@(\w+)\.(.+)/;
-            isValid = emailRegex.test(value) ? true : false;
-        }
-    
-        return isValid;
-    }
-
     inputChangedHandler = (event, name) => {
-        const newAuthForm = {
-            ...this.state.authForm,
-            [name]: {
-                ...this.state.authForm[name],
-                value: event.target.value,
-                valid: this.checkValidation(event.target.value, this.state.authForm[name].validation),
-                touched: true,
-            }
-        };
+        const updatedInputValue = updateObject(this.state.authForm[name], {
+            value: event.target.value,
+            valid: checkValidation(event.target.value, this.state.authForm[name].validation),
+            touched: true,
+        });
+        const newAuthForm = updateObject(this.state.authForm, {
+            [name]: updatedInputValue,
+        });
 
         this.setState({
             authForm: newAuthForm,

@@ -9,6 +9,8 @@ import classes from './contactData.css';
 import withErrorHandler from '../../../hoc/withErrorHandler/withErrorHandler';
 // Redux actions
 import { purchaseBurguer } from '../../../store/actions';
+// Utilities
+import { updateObject, checkValidation } from '../../../shared/utility';
 
 class ContactData extends Component {
 
@@ -115,32 +117,16 @@ class ContactData extends Component {
     this.props.onBurguerPurchase(order, this.props.token);
   }
 
-  checkValidation(value, rules) {
-    let isValid = true;
-
-    if (rules.required) {
-      isValid = value.trim() !== '' && isValid;
-    }
-
-    if (rules.minLength) {
-      isValid = value.length >= rules.minLength && isValid;
-    }
-
-    if (rules.maxLength) {
-      isValid = value.length <= rules.maxLength && isValid;
-    }
-
-    return isValid;
-  }
-
   inputChangedHandler = (event, inputIdentifier) => {
-    const newOrderForm = {...this.state.orderForm};
-    const newInputValue = {...newOrderForm[inputIdentifier]};
+    const newInputValue = updateObject(this.state.orderForm[inputIdentifier], {
+      value: event.target.value,
+      valid: checkValidation(event.target.value, this.state.orderForm[inputIdentifier].validation),
+      touched: true,
+    });
 
-    newInputValue.value = event.target.value;
-    newInputValue.valid = this.checkValidation(newInputValue.value, newInputValue.validation);
-    newInputValue.touched = true;
-    newOrderForm[inputIdentifier] = newInputValue;
+    const newOrderForm = updateObject(this.state.orderForm, {
+      [inputIdentifier]: newInputValue,
+    });
 
     let formIsValid = true;
     for (let inputField in newOrderForm) {

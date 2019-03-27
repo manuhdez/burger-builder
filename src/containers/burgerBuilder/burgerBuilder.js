@@ -23,9 +23,7 @@ class BurgerBuilder extends Component {
   }
 
   componentDidMount = () => {
-    if (this.props.ings) {
-      console.log('ya hay ingredientes no hay que descargarlos');
-    } else {
+    if (!this.props.ings) {
       this.props.fetchIngredients();
     }
   }
