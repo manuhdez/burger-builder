@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { Route, Switch, withRouter } from 'react-router-dom';
+import React, { Component, Fragment } from 'react';
+import { Route, withRouter } from 'react-router-dom';
 
 import Layout from './hoc/layout/layout';
 import BurgerBuilder from './containers/burgerBuilder/burgerBuilder';
@@ -18,22 +18,22 @@ class App extends Component {
 
   render() {
     let appRoutes = null;
-
     if (this.props.isUserAuth) {
       appRoutes = (
-        <Switch>
+        <Fragment>
           <Route path="/" exact component={BurgerBuilder}/>
           <Route path="/checkout" component={Checkout} />
           <Route path="/orders" component={Orders} />
+          <Route path="/auth" component={Auth} />
           <Route path="/logout" component={Logout} />
-        </Switch>
+        </Fragment>
       );
     } else {
       appRoutes = (
-        <Switch>
+        <Fragment>
           <Route path="/" exact component={BurgerBuilder}/>
           <Route path="/auth" component={Auth} />
-        </Switch>
+        </Fragment>
       );
     }
 
