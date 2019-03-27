@@ -4,14 +4,14 @@ import NavItem from './navigationItem/navItem';
 
 const navItems = props => (
   <ul className={classes.NavItems}>
-    <NavItem link="/" exact>Burger Builder</NavItem>
+    <NavItem link="/" exact clicked={props.clicked} >Burger Builder</NavItem>
     { props.isUserAuth
-      ? <NavItem link="/orders" >Orders</NavItem>
+      ? <NavItem link="/orders" clicked={props.clicked} >Orders</NavItem>
       : null
     }
     { props.isUserAuth
-      ? <NavItem link="/logout" >Log out</NavItem>
-      : <NavItem link="/auth" >Log in</NavItem>
+      ? <NavItem link="/logout" clicked={props.clicked} >Log out</NavItem>
+      : <NavItem link="/auth" clicked={props.clicked} >Log in</NavItem>
     }
   </ul>
 );
