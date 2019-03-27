@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Route, withRouter } from 'react-router-dom';
+import { Route, Switch, withRouter } from 'react-router-dom';
 
 import Layout from './hoc/layout/layout';
 import BurgerBuilder from './containers/burgerBuilder/burgerBuilder';
@@ -17,19 +17,41 @@ class App extends Component {
   }
 
   render() {
-    return (
-      <div>
-        <Layout>
+    let appRoutes = null;
+
+    if (this.props.isUserAuth) {
+      appRoutes = (
+        <Switch>
           <Route path="/" exact component={BurgerBuilder}/>
-          <Route path="/auth" component={Auth} />
           <Route path="/checkout" component={Checkout} />
           <Route path="/orders" component={Orders} />
           <Route path="/logout" component={Logout} />
+        </Switch>
+      );
+    } else {
+      appRoutes = (
+        <Switch>
+          <Route path="/" exact component={BurgerBuilder}/>
+          <Route path="/auth" component={Auth} />
+        </Switch>
+      );
+    }
+
+    return (
+      <div>
+        <Layout>
+            { appRoutes }
         </Layout>
       </div>
     );
   }
 }
+
+const mapStateToProps = (state) => {
+  return {
+    isUserAuth: state.auth.idToken ? true : false,
+  };
+};
 
 const mapDispatchToProps = (dispatch) => {
   return {
@@ -37,4 +59,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default withRouter(connect(null, mapDispatchToProps)(App));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));

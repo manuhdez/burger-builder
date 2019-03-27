@@ -68,8 +68,8 @@ export const checkTokenTimeout = (expiration) => {
 };
 
 export const setRedirectPath = (path) => ({
-  type: SET_AUTH_REDIRECT_PATH,
-  path
+    type: SET_AUTH_REDIRECT_PATH,
+    path
 })
 
 export const checkAuthState = () => {
