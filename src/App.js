@@ -14,10 +14,6 @@ import { checkAuthState } from './store/actions';
 const Checkout = lazy(() => import('./containers/checkout/checkout'));
 const Orders = lazy(() => import('./containers/orders/orders'));
 
-
-
-
-
 class App extends Component {
 
   componentDidMount() {
