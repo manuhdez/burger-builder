@@ -22,4 +22,16 @@ describe('<NavItems />', () => {
         wrapper.setProps({isUserAuth: true});
         expect(wrapper.find(NavItem)).toHaveLength(3);
     });
+
+    it('should render the logout route if the user is authenticated', () => {
+        wrapper.setProps({isUserAuth: true});
+        expect(wrapper.contains(<NavItem link="/logout">Log out</NavItem>)).toEqual(true);
+        expect(wrapper.contains(<NavItem link="/auth">Log in</NavItem>)).toEqual(false);
+    });
+
+    it('should render the auth route if the user is not authenticated', () => {
+        wrapper.setProps({isUserAuth: false});
+        expect(wrapper.contains(<NavItem link="/auth">Log in</NavItem>)).toEqual(true);
+        expect(wrapper.contains(<NavItem link="/logout">Log out</NavItem>)).toEqual(false);
+    });
 });
