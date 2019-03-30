@@ -3,7 +3,7 @@ import { updateObject } from '../../shared/utility';
 
 const { AUTH_START, AUTH_SUCCESS, AUTH_FAIL, AUTH_LOGOUT, SET_AUTH_REDIRECT_PATH } = actionTypes;
 
-const initialState = {
+export const initialState = {
     idToken: null,
     userId: null,
     error: null,
