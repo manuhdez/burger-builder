@@ -1,4 +1,4 @@
-import React, { Component, Fragment, lazy } from 'react';
+import React, { useEffect, Fragment, lazy } from 'react';
 import { Route, withRouter } from 'react-router-dom';
 
 import Layout from './hoc/layout/layout';
@@ -14,41 +14,37 @@ import { checkAuthState } from './store/actions';
 const Checkout = lazy(() => import('./containers/checkout/checkout'));
 const Orders = lazy(() => import('./containers/orders/orders'));
 
-class App extends Component {
+const app = props => {
 
-  componentDidMount() {
-    this.props.onAutoSignup();
-  }
+  useEffect(() => props.onAutoSignup(), []);
 
-  render() {
-    let appRoutes = null;
-    if (this.props.isUserAuth) {
-      appRoutes = (
-        <Fragment>
-          <Route path="/" exact component={BurgerBuilder}/>
-          <Route path="/checkout" render={(props) => asyncComponent(Checkout, props)} />
-          <Route path="/orders" render={(props) => asyncComponent(Orders, props)} />
-          <Route path="/auth" component={Auth} />
-          <Route path="/logout" component={Logout} />
-        </Fragment>
-      );
-    } else {
-      appRoutes = (
-        <Fragment>
-          <Route path="/" exact component={BurgerBuilder}/>
-          <Route path="/auth" component={Auth} />
-        </Fragment>
-      );
-    }
-
-    return (
-      <div>
-        <Layout>
-            { appRoutes }
-        </Layout>
-      </div>
+  let appRoutes = null;
+  if (props.isUserAuth) {
+    appRoutes = (
+      <Fragment>
+        <Route path="/" exact component={BurgerBuilder}/>
+        <Route path="/checkout" render={(props) => asyncComponent(Checkout, props)} />
+        <Route path="/orders" render={(props) => asyncComponent(Orders, props)} />
+        <Route path="/auth" component={Auth} />
+        <Route path="/logout" component={Logout} />
+      </Fragment>
+    );
+  } else {
+    appRoutes = (
+      <Fragment>
+        <Route path="/" exact component={BurgerBuilder}/>
+        <Route path="/auth" component={Auth} />
+      </Fragment>
     );
   }
+
+  return (
+    <div>
+      <Layout>
+          { appRoutes }
+      </Layout>
+    </div>
+  );
 }
 
 const mapStateToProps = (state) => {
@@ -63,4 +59,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(app));
