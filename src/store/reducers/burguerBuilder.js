@@ -5,12 +5,6 @@ import { updateIngredientState, setIngredients } from '../storeUtility';
 const { ADD_INGREDIENT, REMOVE_INGREDIENT, SET_INGREDIENTS, FETCH_INGREDIENTS_FAIL } = actionTypes;
 
 const initialState = {
-  ingredients: {
-    salad: 0,
-    bacon: 0,
-    cheese: 0,
-    meat: 0
-  },
   error: false,
   totalPrice: 4,
   building: false
