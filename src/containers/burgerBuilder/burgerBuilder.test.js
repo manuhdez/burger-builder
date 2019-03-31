@@ -2,13 +2,14 @@ import React from 'react';
 import { configure, shallow } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 // Components
-import { BurgerBuilder } from './burgerBuilder';
+import { burgerBuilder } from './burgerBuilder';
 import BuildControls from '../../components/Burger/buildControls/buildControls';
 import Spinner from '../../components/UI/spinner/spinner';
 
 configure({adapter: new Adapter()});
 
 describe('<BurgerBuilder/>', () => {
+    const BurgerBuilder = burgerBuilder;
     let wrapper;
     beforeEach(() => {
         wrapper = shallow(<BurgerBuilder fetchIngredients={() => {}} />);
