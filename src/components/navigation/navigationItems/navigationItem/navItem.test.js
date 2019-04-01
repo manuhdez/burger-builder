@@ -10,8 +10,13 @@ import { NavLink } from 'react-router-dom';
 configure({adapter: new Adapter()});
 
 describe('<NavItem/>', () => {
+    let wrapper;
+    beforeEach(() => {
+        wrapper = shallow(<NavItem>Burger Builder</NavItem>);
+    });
+
     it('should pass its children to the Navlink component', () => {
-        const wrapper = shallow(<NavItem>Burger Builder</NavItem>);
+        wrapper.setProps({link: '/'})
         expect(wrapper.find(NavLink).children()).toHaveLength(1);
     });
 });
